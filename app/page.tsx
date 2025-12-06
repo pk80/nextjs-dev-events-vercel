@@ -4,9 +4,6 @@ import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
 import { notFound } from "next/navigation";
-// import { Suspense } from "react";
-// import { homePageLoadEvents } from "@/lib/actions/home.actions";
-
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 if (!BASE_URL) {
@@ -14,8 +11,6 @@ if (!BASE_URL) {
 }
 
 export default async function HomePage() {
-  // const events = await homePageLoadEvents()
-  // if (!events) return notFound()
   'use cache'
   cacheLife('hours')
   const response = await fetch(`${BASE_URL}/api/events`)
@@ -23,7 +18,6 @@ export default async function HomePage() {
   const { events } = await response.json()
 
   return (
-    // <Suspense fallback={<div>Loading...</div>}>
     <section className="text-center">
       <h1>The Hub for Every Dev<br />Event you can&apos;t miss.</h1>
       <h2 className="mt-5">Welcome to Dev Event Next.js Application!</h2>
@@ -45,6 +39,5 @@ export default async function HomePage() {
 
       </div>
     </section>
-    // </Suspense>
   );
 }

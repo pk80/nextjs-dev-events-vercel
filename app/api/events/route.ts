@@ -52,6 +52,14 @@ export async function POST(req: NextRequest) {
       tags: tags,
       agenda: agenda,
     });
+    if (!createdEvent) {
+      return NextResponse.json(
+        {
+          message: "Event creation failed",
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       {
@@ -75,7 +83,16 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     await connectDB();
+    console.log("Connect to MongoDB successfully!");
     const events = await Event.find().sort({ createdAt: -1 });
+    if (!events) {
+      return NextResponse.json(
+        {
+          message: "No events found",
+        },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       {

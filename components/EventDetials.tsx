@@ -56,9 +56,7 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
 
     let event;
     try {
-        const request = await fetch(`${BASE_URL}/api/events/${slug}`, {
-            next: { revalidate: 60 }
-        })
+        const request = await fetch(`${BASE_URL}/api/events/${slug}`)
         if (!request.ok) {
             if (request.status === 404) {
                 return notFound()

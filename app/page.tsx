@@ -1,8 +1,11 @@
-import { cacheLife } from "next/cache";
+// import { cacheLife } from "next/cache";
 
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { homePageLoadEvents } from "@/lib/actions/home.actions";
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
@@ -11,32 +14,37 @@ if (!BASE_URL) {
 }
 
 export default async function HomePage() {
-  'use cache'
+  const events = await homePageLoadEvents()
+  if (!events) return notFound()
+  /* 'use cache'
   cacheLife('hours')
   const response = await fetch(`${BASE_URL}/api/events`)
-  const { events } = await response.json()
+  if (!response) return notFound()
+  const { events } = await response.json() */
 
   return (
-    <section className="text-center">
-      <h1>The Hub for Every Dev<br />Event you can&apos;t miss.</h1>
-      <h2 className="mt-5">Welcome to Dev Event Next.js Application!</h2>
-      <p className="mt-5">Hackathons, Meetups, and Conferences.<br />All in one place.</p>
-      <ExploreBtn />
-      <div className="mt-10 space-y-7 text-start">
-        <h3>Featured Events</h3>
-        {(events && events.length > 0) ? (
-          <ul className="events">
-            {events && events.length > 0 && events.map((event: IEvent) => (
-              <li key={event.slug} className="list-none">
-                <EventCard {...event} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No events found!</p>
-        )}
+    <Suspense fallback={<div>Loading...</div>}>
+      <section className="text-center">
+        <h1>The Hub for Every Dev<br />Event you can&apos;t miss.</h1>
+        <h2 className="mt-5">Welcome to Dev Event Next.js Application!</h2>
+        <p className="mt-5">Hackathons, Meetups, and Conferences.<br />All in one place.</p>
+        <ExploreBtn />
+        <div className="mt-10 space-y-7 text-start">
+          <h3>Featured Events</h3>
+          {(events && events.length > 0) ? (
+            <ul className="events">
+              {events && events.length > 0 && events.map((event: IEvent) => (
+                <li key={event.slug} className="list-none">
+                  <EventCard {...event} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No events found!</p>
+          )}
 
-      </div>
-    </section>
+        </div>
+      </section>
+    </Suspense>
   );
 }

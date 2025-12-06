@@ -1,5 +1,6 @@
 import { Schema, model, models, Document, Types } from "mongoose";
-import Event from "./event.model";
+
+import Event from "@/database/event.model";
 
 // typescript interface for booking document
 export interface IBooking extends Document {

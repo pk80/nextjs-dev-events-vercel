@@ -1,7 +1,8 @@
+import { cacheLife } from "next/cache";
+
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
-import { cacheLife } from "next/cache";
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
@@ -9,10 +10,9 @@ if (!BASE_URL) {
   throw new Error('Please inlcude base url in env file.')
 }
 
-
 export default async function HomePage() {
   'use cache'
-  cacheLife('minutes')
+  cacheLife('hours')
   const response = await fetch(`${BASE_URL}/api/events`)
   const { events } = await response.json()
 

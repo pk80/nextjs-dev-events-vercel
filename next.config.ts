@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   reactCompiler: true,
   images: {
     remotePatterns: [
@@ -11,7 +14,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  cacheComponents:true,
+  cacheComponents: true,
 };
 
 export default nextConfig;

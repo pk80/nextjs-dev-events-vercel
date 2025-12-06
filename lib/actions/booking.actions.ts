@@ -1,6 +1,7 @@
 "use server";
+
 import { Booking } from "@/database";
-import connectDB from "../mongodb";
+import connectDB from "@/lib/mongodb";
 
 export const createBooking = async ({
   eventId,
@@ -14,11 +15,11 @@ export const createBooking = async ({
   try {
     await connectDB();
 
-    const booking = await Booking.create({ eventId, slug, email });
+    await Booking.create({ eventId, slug, email });
 
-    return { success: true, booking: JSON.stringify(booking) };
+    return { success: true };
   } catch (error) {
     console.error("create booking failed", error);
-    return { success: false, error: error };
+    return { success: false };
   }
 };

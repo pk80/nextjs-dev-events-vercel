@@ -1,5 +1,3 @@
-import { IEvent } from "@/database"
-import { getSimilarEventsBySlug } from "@/lib/actions/event.actions"
 import { cacheLife } from "next/cache"
 import Image from "next/image"
 import { notFound } from "next/navigation"
@@ -7,8 +5,16 @@ import { IconType } from "react-icons"
 import { CgProfile } from "react-icons/cg"
 import { FaCalendar, FaClock } from "react-icons/fa"
 import { FaComputer, FaLocationPin } from "react-icons/fa6"
-import BookEvent from "./BookEvent"
-import EventCard from "./EventCard"
+
+import { IEvent } from "@/database"
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions"
+import BookEvent from "@/components/BookEvent"
+import EventCard from "@/components/EventCard"
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+if (!BASE_URL) {
+    throw new Error('Please inlcude base url in env file.')
+}
 
 const EventDetailItem = ({ Icon, alt, label }: { Icon: IconType, alt: string, label: string }) => {
     return (
@@ -43,19 +49,16 @@ const EventTags = ({ tags }: { tags: string[] }) => {
     )
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
-if (!BASE_URL) {
-    throw new Error('Please inlcude base url in env file.')
-}
-
 const EventDetials = async ({ params }: { params: Promise<string> }) => {
     'use cache'
-    cacheLife('minutes')
+    cacheLife('hours')
     const slug = await params
 
     let event;
     try {
-        const request = await fetch(`${BASE_URL}/api/events/${slug}`)
+        const request = await fetch(`${BASE_URL}/api/events/${slug}`, {
+            next: { revalidate: 60 }
+        })
         if (!request.ok) {
             if (request.status === 404) {
                 return notFound()
@@ -113,7 +116,7 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
                         ) : (
                             <p className="text-sm">Be the first to book your spot!</p>
                         )}
-                        <BookEvent eventId={event._id.toString()} slug={slug} />
+                        <BookEvent eventId={event._id} slug={event.slug} />
                     </div>
                 </aside>
             </div>

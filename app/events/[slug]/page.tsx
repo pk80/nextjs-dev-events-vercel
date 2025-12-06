@@ -1,6 +1,7 @@
+import { Suspense } from "react"
+
 import EventDetials from "@/components/EventDetials"
 import { RouteParams } from "@/lib/constants"
-import { Suspense } from "react"
 
 const EventDetailsPage = async ({ params }: RouteParams) => {
     const slug = params.then((p) => p.slug)

@@ -1,7 +1,8 @@
 'use client'
 
-import { Button } from "./ui/button"
 import { FaArrowDown } from "react-icons/fa"
+
+import { Button } from "@/components/ui/button"
 
 const ExploreBtn = () => {
     return (

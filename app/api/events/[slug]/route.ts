@@ -1,22 +1,24 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { Event } from "@/database";
 import { RouteParams } from "@/lib/constants";
 import connectDB from "@/lib/mongodb";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: RouteParams) {
-  const { slug } = await params;
-
-  // validate slug
-  if (!slug || typeof slug !== "string" || slug.trim() === "") {
-    return NextResponse.json(
-      { message: "Invalid or missing slug parameter" },
-      { status: 400 }
-    );
-  }
-
+  
   try {
     // connect to the database
     await connectDB();
+    
+    const { slug } = await params;
+  
+    // validate slug
+    if (!slug || typeof slug !== "string" || slug.trim() === "") {
+      return NextResponse.json(
+        { message: "Invalid or missing slug parameter" },
+        { status: 400 }
+      );
+    }
 
     // sanitize slug (remove any potential malicious input)
     const sanitizedSlug = slug.trim().toLowerCase();

@@ -1,7 +1,7 @@
 "use server";
 
 import { Event } from "@/database";
-import connectDB from "../mongodb";
+import connectDB from "@/lib/mongodb";
 
 export const getSimilarEventsBySlug = async (slug: string) => {
   try {

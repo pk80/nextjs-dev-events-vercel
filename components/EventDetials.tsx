@@ -1,6 +1,5 @@
 import { IEvent } from "@/database"
 import { getSimilarEventsBySlug } from "@/lib/actions/event.actions"
-import { BASE_URL } from "@/lib/constants"
 import { cacheLife } from "next/cache"
 import Image from "next/image"
 import { notFound } from "next/navigation"
@@ -42,6 +41,11 @@ const EventTags = ({ tags }: { tags: string[] }) => {
             ))}
         </div>
     )
+}
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+if (!BASE_URL) {
+    throw new Error('Please inlcude base url in env file.')
 }
 
 const EventDetials = async ({ params }: { params: Promise<string> }) => {

@@ -59,5 +59,3 @@ export type RouteParams = {
     slug: string;
   }>;
 };
-
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

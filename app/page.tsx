@@ -1,15 +1,14 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
+import { BASE_URL } from "@/lib/constants";
 import { cacheLife } from "next/cache";
 // import { events } from "@/lib/constants";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export default async function HomePage() {
   'use cache'
   cacheLife('minutes')
-  const response = await fetch(`${baseUrl}/api/events`)
+  const response = await fetch(`${BASE_URL}/api/events`)
   const { events } = await response.json()
 
   return (

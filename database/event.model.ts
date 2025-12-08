@@ -11,7 +11,7 @@ export interface IEvent extends Document {
   date: string;
   time: string;
   mode: string;
-  audience: string;
+  audience: string[];
   agenda: string[];
   organizer: string;
   tags: string[];
@@ -77,9 +77,12 @@ const EventSchema = new Schema<IEvent>(
       },
     },
     audience: {
-      type: String,
+      type: [String],
       required: [true, "Audience is required"],
-      trim: true,
+      validate: {
+        validator: (v: string[]) => v.length > 0,
+        message: "At least one audience is required",
+      },
     },
     agenda: {
       type: [String],

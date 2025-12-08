@@ -8,7 +8,12 @@
     "date": "2025-04-10",
     "time": "08:30",
     "mode": "Hybrid (In-Person & Online",
-    "audience": "cloud engineers, DevOps, enterprise leaders, AI researchers",
+    "audience": [
+        "cloud engineers",
+        "DevOps",
+        "enterprise leaders",
+        "AI researchers"
+    ],
     "agenda": [
         "08:30 AM - 09:30 AM | Keynote: AI-Driven Cloud Infrastructure",
         "09:45 AM - 11:00 AM | Deep Dives: Kubernetes, Data Analytics, Security",

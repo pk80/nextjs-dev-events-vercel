@@ -4,11 +4,7 @@ import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
 import { notFound } from "next/navigation";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
-if (!BASE_URL) {
-  throw new Error('Please inlcude base url in env file.')
-}
+import { BASE_URL } from "@/lib/constants"
 
 export default async function HomePage() {
   'use cache'

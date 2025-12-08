@@ -19,11 +19,12 @@ export async function POST(req: NextRequest) {
     }
 
     // convert array strings
-    const tags = JSON.parse(formData.get("tags") as string);
     const agenda = JSON.parse(formData.get("agenda") as string);
+    const tags = JSON.parse(formData.get("tags") as string);
+    const audience = JSON.parse(formData.get("audience") as string);
 
     // upload images to cloudinary
-    const file = formData.get("image") as File;
+    const file = formData.get("eventBanner") as File;
     if (!file) {
       return NextResponse.json(
         { message: "Image file is required" },
@@ -46,11 +47,11 @@ export async function POST(req: NextRequest) {
     event.image = (uploadResult as { secure_url: string }).secure_url;
 
     // create new event
-    // const createdEvent = await Event.create(event);
     const createdEvent = await Event.create({
       ...event,
-      tags: tags,
+      audience: audience,
       agenda: agenda,
+      tags: tags,
     });
     if (!createdEvent) {
       return NextResponse.json(
@@ -83,7 +84,6 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     await connectDB();
-    console.log("Connect to MongoDB successfully!");
     const events = await Event.find().sort({ createdAt: -1 });
     if (!events) {
       return NextResponse.json(

@@ -140,7 +140,7 @@
   }
 
   nav {
-    @apply flex w-full justify-between items-center px-5;
+    @apply flex w-full justify-between items-center px-5 max-h-12;
   }
 
   nav ul {
@@ -272,6 +272,18 @@
       .button-submit {
         @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
       }
+    }
+  }
+
+  .create-event {
+    @apply flex flex-col p-2 gap-2;
+
+    input {
+      @apply border p-2;
+    }
+
+    textarea {
+      @apply border p-2;
     }
   }
 }

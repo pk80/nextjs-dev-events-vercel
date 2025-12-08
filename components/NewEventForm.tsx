@@ -38,19 +38,19 @@ const NewEventForm = () => {
   const router = useRouter();
   // initialize the state of the form
   const [formData, setFormData] = useState<EventFormData>({
-    title: 'Test',
-    description: 'test description',
+    title: '',
+    description: '',
     overview: 'test overview',
     eventBanner: null,
-    venue: 'test',
-    location: 'test',
-    date: '2025-12-08',
-    time: '18:50',
-    mode: 'hybrid',
-    audience: ['one', 'two'],
-    agenda: ['1', '2'],
-    organizer: 'test',
-    tags: ['qw', 'we'],
+    venue: '',
+    location: '',
+    date: '',
+    time: '',
+    mode: '',
+    audience: [],
+    agenda: [],
+    organizer: '',
+    tags: [],
   })
 
   // other required states
@@ -162,7 +162,7 @@ const NewEventForm = () => {
   }
 
   return (
-    <div className="p-5 max-w-[600px] mx-auto" >
+    <div className="p-5 max-w-[600px] md:max-w-3/4 mx-auto" >
       <h2 className="text-center">Create New Event</h2>
       <form onSubmit={handleSubmit} className="text-[12px]">
         {/* TITLE : input-text */}
@@ -209,89 +209,95 @@ const NewEventForm = () => {
             accept="image/*"
           />
         </div>
-        {/* VENUE : input-text */}
-        <div className="mt-3">
-          <Label htmlFor="venue" className="mb-2 text-[18px] font-semibold">Venue</Label>
-          <Input type="text"
-            id="venue"
-            name="venue"
-            value={formData.venue}
-            onChange={handleChange}
-            required
-          />
+        {/* VENUE : LOCATION */}
+        <div className="mt-3 flex items-center gap-4">
+          {/* VENUE : input-text */}
+          <div className="w-full">
+            <Label htmlFor="venue" className="mb-2 text-[18px] font-semibold">Venue</Label>
+            <Input type="text"
+              id="venue"
+              name="venue"
+              value={formData.venue}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* LOCATION : input-text */}
+          <div className="w-full">
+            <Label htmlFor="location" className="mb-2 text-[18px] font-semibold">Location</Label>
+            <Input type="text"
+              id="location"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-        {/* LOCATION : input-text */}
-        <div className="mt-3">
-          <Label htmlFor="location" className="mb-2 text-[18px] font-semibold">Location</Label>
-          <Input type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* DATE : shadcn calender with popover :TODO: required*/}
-        <div className="mt-3">
-          <Label htmlFor="date" className="mb-2 text-[18px] font-semibold">Event Date</Label>
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button variant={"outline"} id="date" className="w-32 justify-between font-normal">
-                {date ? date.toLocaleDateString() : "Select Date"}
-                <ChevronDownIcon />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-              <Calendar mode="single"
-                captionLayout="dropdown"
-                startMonth={new Date(2000, 0)}
-                endMonth={new Date(2050, 0)}
-                selected={date}
-                required={true}
-                onSelect={(dt) => {
-                  setDate(dt)
-                  const newDate = dt.toISOString().split("T")[0]
-                  setFormData((prev) => ({
-                    ...prev,
-                    date: newDate || ''
-                  }))
-                  setOpen(false)
-                }}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-        {/* TIME : input-time */}
-        <div className="mt-3">
-          <Label htmlFor="time" className="mb-2 text-[18px] font-semibold">Event Time</Label>
-          <Input type="time"
-            id="time"
-            name="time"
-            className="p-2 text-[16px] [&::-webkit-calendar-picker-indicator]:invert"
-            value={formData.time}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* MODE : schadcn select :TODO: required*/}
-        <div className="mt-3">
-          <Label htmlFor="mode" className="mb-2 text-[18px] font-semibold">Mode</Label>
-          <Select name="mode"
-            value={formData.mode}
-            onValueChange={handleSelectChange}
-            required={true} >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder='Select Mode' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Mode</SelectLabel>
-                <SelectItem value="online">Online</SelectItem>
-                <SelectItem value="offline">Offline</SelectItem>
-                <SelectItem value="hybrid">Hybrid</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        {/* DATE : TIME : MODE */}
+        <div className="mt-3 flex flex-col md:flex-row items-center gap-4">
+          {/* DATE : shadcn calender with popover :TODO: required*/}
+          <div className="w-full">
+            <Label htmlFor="date" className="mb-2 text-[18px] font-semibold">Event Date</Label>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button variant={"outline"} id="date" className="w-full justify-between font-normal">
+                  {date ? date.toLocaleDateString() : "Select Date"}
+                  <ChevronDownIcon />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                <Calendar mode="single"
+                  captionLayout="dropdown"
+                  startMonth={new Date(2000, 0)}
+                  endMonth={new Date(2050, 0)}
+                  selected={date}
+                  required={true}
+                  onSelect={(dt) => {
+                    setDate(dt)
+                    const newDate = dt.toISOString().split("T")[0]
+                    setFormData((prev) => ({
+                      ...prev,
+                      date: newDate || ''
+                    }))
+                    setOpen(false)
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          {/* TIME : input-time */}
+          <div className="w-full">
+            <Label htmlFor="time" className="mb-2 text-[18px] font-semibold">Event Time</Label>
+            <Input type="time"
+              id="time"
+              name="time"
+              className="w-full p-2 text-[16px] [&::-webkit-calendar-picker-indicator]:invert"
+              value={formData.time}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* MODE : schadcn select :TODO: required*/}
+          <div className="w-full">
+            <Label htmlFor="mode" className="mb-2 text-[18px] font-semibold">Mode</Label>
+            <Select name="mode"
+              value={formData.mode}
+              onValueChange={handleSelectChange}
+              required={true} >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder='Select Mode' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Mode</SelectLabel>
+                  <SelectItem value="online">Online</SelectItem>
+                  <SelectItem value="offline">Offline</SelectItem>
+                  <SelectItem value="hybrid">Hybrid</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         {/* AUDIENCE : fieldset */}
         <div className="mt-3">

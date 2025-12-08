@@ -1,7 +1,7 @@
 {
     "title": "Cloud Next 2025",
-    "description": "Google's premier cloud computing event, showcasing innovations in AI, infrastructre and enterprise solutions.",
-    "overview": "Cloud Next 2025 highlights the latest in cloud-native development, Kubernetes, AI, and enterprise scalability. Developers, architects, and executives gather to learn about new Google Cloud services, best practices, and success stories",
+    "description": "Google's premier cloud computing event, showcasing innovations in AI, infrastructure and enterprise solutions.",
+    "overview": "Cloud Next 2025 highlights the latest in cloud-native development, Kubernetes, AI, and enterprise scalability. Developers, architects, and executives gather to learn about new Google Cloud services, best practices, and success stories.",
     "image": "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-4.10&ixid=M3wxMjA3fDB8MHxwaG90by1wYWd1fHx8fGVufDB8fHx8fA%3D&auto=format&fit=crop&q=80&w=2340",
     "venue": "Moscone center",
     "location": "San Francisco, CA",
@@ -22,7 +22,7 @@
         "01:30 PM - 03:00 PM | Workshops: Scaling with GCP",
         "03:15 PM - 04:30 PM | Fireside Chat: The future of Enterprise Cloud"
     ],
-    "organizer": "Google Cloud organizes Cloud Next to connect global businesses, developers, and innvoators with the latest technologies and best practices in cloud computing.",
+    "organizer": "Google Cloud organises Cloud Next to connect global businesses, developers, and innovators with the latest technologies and best practices in cloud computing.",
     "tags": [
         "Cloud",
         "DevOps",

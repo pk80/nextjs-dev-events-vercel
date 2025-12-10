@@ -1,16 +1,16 @@
-import { cacheLife } from "next/cache"
 import Image from "next/image"
-import { notFound } from "next/navigation"
 import { IconType } from "react-icons"
+import { notFound } from "next/navigation"
 import { CgProfile } from "react-icons/cg"
 import { FaCalendar, FaClock } from "react-icons/fa"
 import { FaComputer, FaLocationPin } from "react-icons/fa6"
 
 import { IEvent } from "@/database"
-import { getSimilarEventsBySlug } from "@/lib/actions/event.actions"
+import { BASE_URL } from "@/lib/constants"
 import BookEvent from "@/components/BookEvent"
 import EventCard from "@/components/EventCard"
-import { BASE_URL } from "@/lib/constants"
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions"
+import { cacheLife } from "next/cache"
 
 const EventDetailItem = ({ Icon, alt, label }: { Icon: IconType, alt: string, label: string }) => {
     return (
@@ -55,9 +55,10 @@ const EventAudience = ({ audience }: { audience: string[] }) => {
     )
 }
 
+
 const EventDetials = async ({ params }: { params: Promise<string> }) => {
     'use cache'
-    cacheLife('hours')
+    cacheLife('days')
     const slug = await params
 
     let event;
@@ -79,7 +80,7 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
         return notFound();
     }
 
-    const { description, image, overview, date, time, location, mode, audience, agenda, organizer, tags } = event
+    const { description, image, overview, date, time, venue, location, mode, audience, agenda, organizer, tags } = event
 
     const bookings = 10
     const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug)
@@ -102,7 +103,7 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
                         <h2>Event Details</h2>
                         <EventDetailItem Icon={FaCalendar} alt='calender' label={date} />
                         <EventDetailItem Icon={FaClock} alt='time' label={time} />
-                        <EventDetailItem Icon={FaLocationPin} alt='pin' label={location} />
+                        <EventDetailItem Icon={FaLocationPin} alt='pin' label={`${venue}, ${location}`} />
                         <EventDetailItem Icon={FaComputer} alt='mode' label={mode} />
                         <div className="flex">
                             <EventDetailItem Icon={CgProfile} alt='audience' label="" />
@@ -128,11 +129,12 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
                         ) : (
                             <p className="text-sm">Be the first to book your spot!</p>
                         )}
-                        <BookEvent eventId={event._id} slug={event.slug} />
+                        <BookEvent eventId={event._id.toString()} slug={event.slug} />
                     </div>
                 </aside >
             </div >
-            <div className="flex w-full flex-col gap-4 pt-20">
+            {/* left side at down side */}
+            {<div className="flex w-full flex-col gap-4 pt-20">
                 <h2>Similar Events</h2>
                 <div className="events">
                     {similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent) => (
@@ -142,7 +144,7 @@ const EventDetials = async ({ params }: { params: Promise<string> }) => {
                         />
                     ))}
                 </div>
-            </div>
+            </div>}
         </section >
     )
 }

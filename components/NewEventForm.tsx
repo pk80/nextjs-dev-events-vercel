@@ -40,7 +40,7 @@ const NewEventForm = () => {
   const [formData, setFormData] = useState<EventFormData>({
     title: '',
     description: '',
-    overview: 'test overview',
+    overview: '',
     eventBanner: null,
     venue: '',
     location: '',
@@ -162,7 +162,7 @@ const NewEventForm = () => {
   }
 
   return (
-    <div className="p-5 max-w-[600px] md:max-w-3/4 mx-auto" >
+    <div className="p-5 max-w-[90%] md:max-w-[800px] mx-auto" >
       <h2 className="text-center">Create New Event</h2>
       <form onSubmit={handleSubmit} className="text-[12px]">
         {/* TITLE : input-text */}
@@ -176,28 +176,30 @@ const NewEventForm = () => {
             required
           />
         </div>
-        {/* DESCRIPTION : textarea */}
-        <div className="mt-3">
-          <Label htmlFor="description" className="mb-2 text-[18px] font-semibold">Description</Label>
-          <Textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            required
-          />
-        </div>
-        {/* OVERVIEW : textarea */}
-        <div className="mt-3">
-          <Label htmlFor="overview" className="mb-2 text-[18px] font-semibold">Overview</Label>
-          <Textarea
-            id="overview"
-            name="overview"
-            value={formData.overview}
-            onChange={handleChange}
-            rows={4}
-          />
+        <div className="mt-3 flex flex-col md:flex-row items-center gap-4">
+          {/* DESCRIPTION : textarea */}
+          <div className="w-full">
+            <Label htmlFor="description" className="mb-2 text-[18px] font-semibold">Description</Label>
+            <Textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              required
+            />
+          </div>
+          {/* OVERVIEW : textarea */}
+          <div className="w-full">
+            <Label htmlFor="overview" className="mb-2 text-[18px] font-semibold">Overview</Label>
+            <Textarea
+              id="overview"
+              name="overview"
+              value={formData.overview}
+              onChange={handleChange}
+              rows={4}
+            />
+          </div>
         </div>
         {/* EVENT BANNER : input-file */}
         <div className="mt-3">
@@ -210,7 +212,7 @@ const NewEventForm = () => {
           />
         </div>
         {/* VENUE : LOCATION */}
-        <div className="mt-3 flex items-center gap-4">
+        <div className="mt-3 flex flex-col md:flex-row items-center gap-4">
           {/* VENUE : input-text */}
           <div className="w-full">
             <Label htmlFor="venue" className="mb-2 text-[18px] font-semibold">Venue</Label>

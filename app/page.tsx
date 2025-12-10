@@ -8,7 +8,7 @@ import { BASE_URL } from "@/lib/constants"
 
 export default async function HomePage() {
   'use cache'
-  cacheLife('hours')
+  cacheLife('days')
   const response = await fetch(`${BASE_URL}/api/events`)
   if (!response) return notFound()
   const { events } = await response.json()
